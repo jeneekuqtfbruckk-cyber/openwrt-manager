@@ -1,7 +1,9 @@
 node_modules/
 .next/
 dist/
-build/
+build/*
+!build/icon.ico
+!build/icon-source.png
 __pycache__/
 *.pyc
 *.exe
