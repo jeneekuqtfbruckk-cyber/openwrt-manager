@@ -15,6 +15,10 @@
   "main": "main.js",
   "author": "OpenWrt Manager Team",
   "description": "Desktop manager for OpenWrt devices",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jeneekuqtfbruckk-cyber/openwrt-manager.git"
+  },
   "build": {
     "appId": "com.openwrt.manager",
     "productName": "OpenWrt Manager",
