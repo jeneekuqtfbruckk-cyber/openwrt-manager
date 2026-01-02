@@ -1,0 +1,42 @@
+﻿2026-01-02T17:48:32.9145049Z ##[group]Run npm install
+2026-01-02T17:48:32.9145356Z [36;1mnpm install[0m
+2026-01-02T17:48:32.9219369Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-01-02T17:48:32.9219682Z env:
+2026-01-02T17:48:32.9219913Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.11.9\x64
+2026-01-02T17:48:32.9220331Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.11.9\x64/lib/pkgconfig
+2026-01-02T17:48:32.9220741Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.11.9\x64
+2026-01-02T17:48:32.9221094Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.11.9\x64
+2026-01-02T17:48:32.9221438Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.11.9\x64
+2026-01-02T17:48:32.9221713Z ##[endgroup]
+2026-01-02T17:48:36.0877311Z npm warn skipping integrity check for git dependency ssh://git@github.com/electron/node-gyp.git
+2026-01-02T17:48:41.3561279Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2026-01-02T17:48:41.7883827Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2026-01-02T17:48:43.8893783Z npm warn deprecated boolean@3.2.0: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+2026-01-02T17:48:45.9178279Z npm warn deprecated @npmcli/move-file@2.0.1: This functionality has been moved to @npmcli/fs
+2026-01-02T17:48:46.5608147Z npm warn deprecated rimraf@2.6.3: Rimraf versions prior to v4 are no longer supported
+2026-01-02T17:48:47.7615636Z npm warn deprecated glob@8.1.0: Glob versions prior to v9 are no longer supported
+2026-01-02T17:48:47.7688857Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2026-01-02T17:48:47.9280743Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2026-01-02T17:48:48.7008990Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2026-01-02T17:48:48.8523303Z npm warn deprecated glob@8.1.0: Glob versions prior to v9 are no longer supported
+2026-01-02T17:49:15.0669303Z 
+2026-01-02T17:49:15.0669993Z > my-v0-project@0.1.0 postinstall
+2026-01-02T17:49:15.0671125Z > electron-builder install-app-deps
+2026-01-02T17:49:15.0671409Z 
+2026-01-02T17:49:16.0512240Z   • electron-builder  version=26.0.12
+2026-01-02T17:49:16.0532796Z   • loaded configuration  file=package.json ("build" field)
+2026-01-02T17:49:16.0864368Z   • executing @electron/rebuild  electronVersion=28.3.3 arch=x64 buildFromSource=false appDir=./
+2026-01-02T17:49:16.0876809Z   • installing native dependencies  arch=x64
+2026-01-02T17:49:16.8997517Z   • completed installing native dependencies
+2026-01-02T17:49:16.9321099Z 
+2026-01-02T17:49:16.9321802Z added 578 packages, and audited 579 packages in 43s
+2026-01-02T17:49:16.9322447Z 
+2026-01-02T17:49:16.9323136Z 92 packages are looking for funding
+2026-01-02T17:49:16.9323481Z   run `npm fund` for details
+2026-01-02T17:49:16.9482036Z 
+2026-01-02T17:49:16.9482669Z 1 moderate severity vulnerability
+2026-01-02T17:49:16.9482981Z 
+2026-01-02T17:49:16.9483287Z To address all issues (including breaking changes), run:
+2026-01-02T17:49:16.9483833Z   npm audit fix --force
+2026-01-02T17:49:16.9484034Z 
+2026-01-02T17:49:16.9484181Z Run `npm audit` for details.

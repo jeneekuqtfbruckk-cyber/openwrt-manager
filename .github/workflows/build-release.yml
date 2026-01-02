@@ -46,6 +46,10 @@ jobs:
       - name: Build Next.js frontend
         run: npm run build:ui
         working-directory: 'open-wrt-manager-ui (2)'
+
+      - name: Copy icon files
+        run: Copy-Item "../build/icon.ico" "public/icon.ico" -Force
+        working-directory: 'open-wrt-manager-ui (2)'
         
       - name: Package Electron application
         run: npx electron-builder --win

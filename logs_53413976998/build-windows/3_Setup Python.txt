@@ -1,0 +1,12 @@
+﻿2026-01-02T17:47:55.7411839Z ##[group]Run actions/setup-python@v5
+2026-01-02T17:47:55.7412165Z with:
+2026-01-02T17:47:55.7412326Z   python-version: 3.11
+2026-01-02T17:47:55.7412526Z   check-latest: false
+2026-01-02T17:47:55.7412866Z   token: ***
+2026-01-02T17:47:55.7413030Z   update-environment: true
+2026-01-02T17:47:55.7413235Z   allow-prereleases: false
+2026-01-02T17:47:55.7413415Z   freethreaded: false
+2026-01-02T17:47:55.7413583Z ##[endgroup]
+2026-01-02T17:47:55.9812538Z ##[group]Installed versions
+2026-01-02T17:47:56.0091194Z Successfully set up CPython (3.11.9)
+2026-01-02T17:47:56.0093171Z ##[endgroup]
