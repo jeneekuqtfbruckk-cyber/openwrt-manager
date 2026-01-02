@@ -48,7 +48,7 @@ jobs:
         working-directory: 'open-wrt-manager-ui (2)'
         
       - name: Package Electron application
-        run: electron-builder --win
+        run: npx electron-builder --win
         working-directory: 'open-wrt-manager-ui (2)'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
