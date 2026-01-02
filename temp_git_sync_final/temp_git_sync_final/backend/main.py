@@ -76,15 +76,5 @@ async def run_scan_background(targets, threads):
 
 if __name__ == "__main__":
     import uvicorn
-    import sys
-    import os
-
-    # Fix for PyInstaller noconsole mode (AttributeError: 'NoneType' object has no attribute 'isatty')
-    if sys.stdout is None:
-        sys.stdout = open(os.devnull, "w")
-    if sys.stderr is None:
-        sys.stderr = open(os.devnull, "w")
-
     # Run on localhost:8000
-    # log_config=None prevents uvicorn from trying to configure logging that might fail without console
-    uvicorn.run(app, host="127.0.0.1", port=8000, log_config=None)
+    uvicorn.run(app, host="127.0.0.1", port=8000)

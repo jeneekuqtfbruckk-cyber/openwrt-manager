@@ -1,0 +1,255 @@
+# 🎯 具体实施方案：React + PyQt6 混合架构落地代码
+
+我完全理解你的需求。下面是**可直接运行**的代码，针对你现有的 `LoginManager` 和 React 组件。
+
+---
+
+## 1️⃣ Web 侧：React Hook 桥接（完整可用代码）---
+
+## 2️⃣ Python 侧：WebChannel + Bridge 类（直接替换你的代码）---
+
+## 3️⃣ 构建工作流：从 React 到 `.exe`（完整流程）---
+
+## 🎯 快速集成清单（直接行动指南）
+
+### 📋 步骤 1：修改你的 React 组件（5分钟）
+
+```bash
+cd web/src
+# 创建 hooks 目录
+mkdir hooks
+# 复制我提供的 usePyQtBridge.tsx 到 hooks/
+```
+
+修改你的 `openwrt-manager.tsx`：
+
+```tsx
+// 在文件顶部添加
+import { usePyQtBridge } from './hooks/usePyQtBridge'
+
+export default function OpenWrtManager() {
+  // 🔥 替换原有的状态管理
+  const { 
+    isConnected, 
+    isScanning, 
+    results, 
+    startDetection, 
+    stopDetection 
+  } = usePyQtBridge()
+  
+  const [targets, setTargets] = useState("")
+
+  const handleStartScan = () => {
+    if (!targets.trim()) return
+    startDetection(targets)  // 🔥 调用 Python
+  }
+
+  // 其余代码保持不变，直接使用 results
+  return (
+    <div>
+      {/* 连接指示器 */}
+      {!isConnected && (
+        <div className="fixed top-0 left-0 right-0 bg-yellow-100 p-2 text-center">
+          ⚠️ 正在连接 Python 后端...
+        </div>
+      )}
+      
+      {/* 原有的 UI 代码 */}
+      <button onClick={isScanning ? stopDetection : handleStartScan}>
+        {isScanning ? '停止' : '开始探测'}
+      </button>
+      
+      {/* 表格直接使用 results */}
+      <table>
+        {results.map(result => (
+          <tr key={result.id}>
+            <td>{result.address}</td>
+            <td>{result.status}</td>
+          </tr>
+        ))}
+      </table>
+    </div>
+  )
+}
+```
+
+### 📋 步骤 2：配置前端构建（3分钟）
+
+```bash
+cd web
+npm install  # 如果还没安装依赖
+
+# 创建 vite.config.ts（复制我提供的配置）
+# 创建 scripts/post-build.js（复制我提供的脚本）
+
+# 添加 package.json 脚本
+npm pkg set scripts.build="vite build && node scripts/post-build.js"
+```
+
+### 📋 步骤 3：修改 Python 代码（10分钟）
+
+**创建新文件 `webengine_bridge.py`**（复制我提供的完整代码）
+
+**修改 `openwrt_manager.py`**：
+
+```python
+# 在文件顶部添加导入
+from webengine_bridge import PyQtBridge, WebBridge
+from PyQt6.QtWebEngineWidgets import QWebEngineView
+from PyQt6.QtWebChannel import QWebChannel
+
+# 修改 MainWindow.__init__
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        
+        # 🔥 替换原有的 UI 创建
+        self.setup_webengine()
+        
+        # 其余初始化保持不变
+        self.connect_signals()
+    
+    def setup_webengine(self):
+        """设置 WebEngine"""
+        # WebEngineView
+        self.webview = QWebEngineView()
+        self.setCentralWidget(self.webview)
+        
+        # QWebChannel
+        self.channel = QWebChannel()
+        self.py_bridge = PyQtBridge(self)
+        self.channel.registerObject('bridge', self.py_bridge)
+        self.webview.page().setWebChannel(self.channel)
+        
+        # Web Bridge
+        self.web_bridge = WebBridge(self.webview)
+        
+        # 加载页面
+        html_path = Path(__file__).parent / 'web' / 'dist' / 'index.html'
+        self.webview.setUrl(QUrl.fromLocalFile(str(html_path.absolute())))
+        
+        # 调试
+        self.webview.loadFinished.connect(
+            lambda ok: print("✅ 页面加载" if ok else "❌ 加载失败")
+        )
+
+# 修改 LoginManager，传入 web_bridge
+self.login_manager = LoginManager(
+    max_concurrent=50, 
+    web_bridge=self.web_bridge
+)
+```
+
+**修改 `LoginManager.detect_login`**（添加 Web 回调）：
+
+```python
+async def detect_login(self, row: int, target_url: str):
+    # ... 原有检测逻辑 ...
+    
+    # 🔥 添加 Web 回调（在更新状态时）
+    if self.web_bridge:
+        self.web_bridge.call_js_callback(
+            'onUpdateRow',
+            row,
+            status,      # "登录成功" / "登录失败"
+            username,
+            password,
+            notes
+        )
+    
+    # 保留原有的信号（兼容性）
+    self.signal_bridge.update_row.emit(row, status, username, password, notes)
+```
+
+### 📋 步骤 4：测试运行（2分钟）
+
+```bash
+# 构建前端
+cd web
+npm run build
+
+# 运行 Python
+cd ..
+python openwrt_manager.py
+```
+
+**预期效果：**
+- 窗口打开，显示你的 v0 设计
+- 点击"开始探测"，表格实时更新
+- F12 打开开发者工具，应该看到：
+  ```
+  🔷 PyQt WebEngine 环境已就绪
+  ✅ QWebChannel 连接成功
+  📥 收到信号: row=0, status=登录成功
+  ```
+
+---
+
+## 🔥 常见问题速查
+
+### Q1: 页面空白？
+
+```python
+# 检查路径
+html_path = Path(__file__).parent / 'web' / 'dist' / 'index.html'
+print(f"加载路径: {html_path}")
+print(f"文件存在: {html_path.exists()}")
+
+# 临时解决：使用绝对路径
+self.webview.setUrl(QUrl.fromLocalFile(str(html_path.resolve())))
+```
+
+### Q2: QWebChannel 连接失败？
+
+```javascript
+// 在 React 中添加调试
+useEffect(() => {
+  console.log('检查 qt 对象:', typeof window.qt)
+  console.log('检查 QWebChannel:', typeof QWebChannel)
+}, [])
+```
+
+### Q3: Python 信号没反应？
+
+```python
+# 在 Python 中验证
+self.web_bridge.call_js_callback('onUpdateRow', 0, 'test', '', '', '')
+
+# 然后在浏览器控制台检查是否有输出
+```
+
+### Q4: 打包后无法运行？
+
+```python
+# 改用 qrc 资源
+# 1. 创建 resources.qrc
+# 2. pyrcc6 resources.qrc -o resources_rc.py
+# 3. 在代码中 import resources_rc
+# 4. 使用 QUrl("qrc:/index.html")
+```
+
+---
+
+## 💡 下一步优化建议
+
+1. **性能优化**：
+   - 使用 React.memo 减少不必要的重渲染
+   - 批量更新 results（不要每行都触发一次）
+
+2. **用户体验**：
+   - 添加加载动画
+   - 添加错误边界处理
+   - 实现断线重连
+
+3. **调试工具**：
+   - 保留开发者工具开关
+   - 添加日志导出功能
+
+---
+
+需要我针对某个具体步骤提供更详细的代码吗？比如：
+- 完整的 `webengine_bridge.py` 文件
+- 修改后的完整 `MainWindow` 类
+- 打包脚本的完整版本
+
+我可以根据你的具体需求进一步细化！🚀

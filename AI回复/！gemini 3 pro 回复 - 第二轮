@@ -1,0 +1,179 @@
+这是一个非常明智的决定。使用 **PyQt6 + QWebEngineView + React/Tailwind** 的混合架构，是目前在 Python 桌面端实现 100% 像素级视觉还原的最短路径。
+
+以下是针对你提供的代码和需求的 3 个核心技术难点的具体落地代码。
+
+---
+
+### 1. 最小化 React 改造 (The Glue Code)
+
+在 React 端，你需要通过 `qwebchannel.js` 建立通信。核心逻辑是使用 `useEffect` 挂载 Python 暴露的对象，并将其信号映射到 React 的 `useState`。
+
+**第一步：** 在 `index.html` 中引入 Qt 提供的脚本（在构建前放入 `public` 文件夹）：
+```html
+<!-- public/index.html -->
+<script type="text/javascript" src="qwebchannel.js"></script>
+```
+
+**第二步：** 修改 `OpenWrtManager.tsx` 以连接 Python：
+
+```tsx
+// 在 component 内部添加
+import { useEffect, useRef } from "react"
+
+export default function OpenWrtManager() {
+  // ... 原有 useState ...
+  const pyBridgeRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (typeof window.qt !== 'undefined') {
+      new QWebChannel(window.qt.webChannelTransport, (channel) => {
+        const bridge = channel.objects.pyBridge;
+        pyBridgeRef.current = bridge;
+
+        // 监听 Python 发出的信号
+        bridge.update_row_signal.connect((rowId: number, status: string, user: string, pass: string, details: string) => {
+          setResults(prev => {
+            // 如果 rowId 已存在则更新，否则添加
+            const exists = prev.find(r => r.id === rowId);
+            if (exists) {
+              return prev.map(r => r.id === rowId ? 
+                { ...r, status: status as any, username: user, password: pass, details } : r
+              );
+            }
+            return [...prev, { id: rowId, address: "", status: status as any, username: user, password: pass, details }];
+          });
+        });
+
+        bridge.task_finished_signal.connect(() => {
+          setIsScanning(false);
+          alert("探测完成！");
+        });
+      });
+    }
+  }, []);
+
+  // 修改开始按钮的处理函数
+  const handleStartScan = () => {
+    if (!targets.trim() || !pyBridgeRef.current) return;
+    setIsScanning(true);
+    setResults([]); // 清空旧结果
+    
+    // 调用 Python 函数
+    pyBridgeRef.current.python_start_scan(targets, threads);
+  };
+
+  // ... 渲染逻辑不变 ...
+}
+```
+
+---
+
+### 2. Python 端的 WebChannel 注入
+
+你需要建立一个 `Bridge` 类作为中转站，连接你的 `LoginManager` (信号源) 和 Web 页面。
+
+```python
+from PyQt6.QtCore import QObject, pyqtSlot, pyqtSignal
+from PyQt6.QtWebChannel import QWebChannel
+
+class WebBridge(QObject):
+    """桥接类：负责 JS 和 Python 的双向通信"""
+    # 定义发送给 JS 的信号
+    update_row_signal = pyqtSignal(int, str, str, str, str)
+    task_finished_signal = pyqtSignal()
+
+    def __init__(self, login_manager):
+        super().__init__()
+        self.login_manager = login_manager
+        # 转发 LoginManager 的信号到 Web 端
+        self.login_manager.signal_bridge.update_row.connect(self.update_row_signal.emit)
+        self.login_manager.signal_bridge.task_finished.connect(self.task_finished_signal.emit)
+
+    @pyqtSlot(str, int)
+    def python_start_scan(self, targets_raw, threads):
+        """JS 调用此函数开始扫描"""
+        urls = [url.strip() for url in targets_raw.split('\n') if url.strip()]
+        self.login_manager.max_concurrent = threads
+        # 启动你现有的异步逻辑
+        import asyncio
+        asyncio.ensure_future(self.login_manager.batch_detect(urls))
+
+# 在 MainWindow 中的初始化
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.login_manager = LoginManager() # 你原有的类
+        self.init_ui()
+
+    def init_ui(self):
+        self.view = QWebEngineView()
+        
+        # 1. 创建频道
+        self.channel = QWebChannel()
+        self.bridge = WebBridge(self.login_manager)
+        
+        # 2. 注册对象，JS 端通过 channel.objects.pyBridge 访问
+        self.channel.registerObject("pyBridge", self.bridge)
+        self.view.page().setWebChannel(self.channel)
+        
+        # 3. 加载页面 (开发环境指向 localhost，生产环境指向文件)
+        # self.view.load(QUrl("http://localhost:5173")) 
+        self.view.load(QUrl.fromLocalFile(os.path.abspath("dist/index.html")))
+        
+        self.setCentralWidget(self.view)
+```
+
+---
+
+### 3. 工程化与打包 (The Build Workflow)
+
+为了让 PyQt 能够直接读取 React 编译后的文件，必须配置 **相对路径引用**。
+
+#### A. Vite 配置 (vite.config.ts)
+默认情况下，Vite 生成的 HTML 引用资源是 `/assets/...`，这在本地文件系统加载时会失效。
+```typescript
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+  base: './', // 关键：强制使用相对路径
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+  }
+})
+```
+
+#### B. 获取 qwebchannel.js
+你不需要去网上下载，它就在你的 Python 环境里。运行以下命令找到并拷贝到 React 的 `public` 目录：
+```bash
+# 在你的 Python 环境执行，找到路径后手动拷贝
+python -c "import PyQt6; import os; print(os.path.join(os.path.dirname(PyQt6.__file__), 'Qt6', 'bin', 'qwebchannel.js'))"
+```
+
+#### C. 打包成单个 .EXE
+使用 `PyInstaller` 时，将 `dist` 文件夹整体打包进去：
+```bash
+pyinstaller --noconsole --add-data "dist;dist" main.py
+```
+在 Python 代码中，处理路径兼容性：
+```python
+def get_resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
+
+# 加载时使用
+path = get_resource_path("dist/index.html")
+self.view.load(QUrl.fromLocalFile(path))
+```
+
+### 总结 Action Plan
+
+1.  **前端**：在 Vite 项目中安装 Tailwind，把 v0 的代码贴进 `App.tsx`，配置 `base: './'`。
+2.  **通信**：在 `useEffect` 里初始化 `QWebChannel`，把 Python 的信号绑定到 React 的 `setResults`。
+3.  **后端**：在 PyQt 中保留你强大的 `LoginManager` 异步逻辑，仅通过一个 `Bridge` 类作为“翻译官”。
+4.  **交付**：执行 `npm run build`，然后用 PyQt 加载生成的 `dist/index.html`。
+
+这样你就能获得 **V8 引擎级别的渲染精度** + **Python 强大的异步并发能力**，完美解决之前 QSS 阴影、圆角和字体渲染不一致的痛点。
