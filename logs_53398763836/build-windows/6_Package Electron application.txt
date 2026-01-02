@@ -1,0 +1,30 @@
+﻿2026-01-02T13:07:44.5559225Z ##[group]Run npx electron-builder --win
+2026-01-02T13:07:44.5559618Z [36;1mnpx electron-builder --win[0m
+2026-01-02T13:07:44.5630719Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-01-02T13:07:44.5631026Z env:
+2026-01-02T13:07:44.5631389Z   GH_TOKEN: ***
+2026-01-02T13:07:44.5631548Z ##[endgroup]
+2026-01-02T13:07:49.5606750Z   • electron-builder  version=26.0.12 os=10.0.26100
+2026-01-02T13:07:49.5615192Z   • artifacts will be published  reason=tag is defined tag=v2.0.0
+2026-01-02T13:07:49.5705088Z   • loaded configuration  file=package.json ("build" field)
+2026-01-02T13:07:49.7479914Z   • skipped dependencies rebuild  reason=npmRebuild is set to false
+2026-01-02T13:07:49.7481383Z   • packaging       platform=win32 arch=x64 electron=28.3.3 appOutDir=dist\win-unpacked
+2026-01-02T13:07:50.0454217Z   • downloading     url=https://github.com/electron/electron/releases/download/v28.3.3/electron-v28.3.3-win32-x64.zip size=108 MB parts=8
+2026-01-02T13:07:50.3361511Z   • downloaded      url=https://github.com/electron/electron/releases/download/v28.3.3/electron-v28.3.3-win32-x64.zip duration=566ms
+2026-01-02T13:07:53.9636224Z   • file source doesn't exist  from=D:\a\openwrt-manager\openwrt-manager\backend\dist\backend.exe
+2026-01-02T13:07:54.2290447Z   • updating asar integrity executable resource  executablePath=dist\win-unpacked\OpenWrt Manager.exe
+2026-01-02T13:07:54.2464651Z   • file source doesn't exist  from=D:\a\openwrt-manager\openwrt-manager\backend\dist\backend.exe
+2026-01-02T13:07:54.3141120Z   ⨯ Cannot detect repository by .git/config. Please specify "repository" in the package.json (https://docs.npmjs.com/files/package.json#repository).
+2026-01-02T13:07:54.3143715Z Please see https://electron.build/publish  failedTask=build stackTrace=Error: Cannot detect repository by .git/config. Please specify "repository" in the package.json (https://docs.npmjs.com/files/package.json#repository).
+2026-01-02T13:07:54.3147785Z Please see https://electron.build/publish
+2026-01-02T13:07:54.3149002Z     at getInfo (D:\a\openwrt-manager\openwrt-manager\open-wrt-manager-ui (2)\node_modules\app-builder-lib\src\publish\PublishManager.ts:564:13)
+2026-01-02T13:07:54.3150784Z     at getResolvedPublishConfig (D:\a\openwrt-manager\openwrt-manager\open-wrt-manager-ui (2)\node_modules\app-builder-lib\src\publish\PublishManager.ts:573:18)
+2026-01-02T13:07:54.3152717Z     at resolvePublishConfigurations (D:\a\openwrt-manager\openwrt-manager\open-wrt-manager-ui (2)\node_modules\app-builder-lib\src\publish\PublishManager.ts:456:16)
+2026-01-02T13:07:54.3154555Z     at getPublishConfigs (D:\a\openwrt-manager\openwrt-manager\open-wrt-manager-ui (2)\node_modules\app-builder-lib\src\publish\PublishManager.ts:430:10)
+2026-01-02T13:07:54.3156502Z     at getAppUpdatePublishConfiguration (D:\a\openwrt-manager\openwrt-manager\open-wrt-manager-ui (2)\node_modules\app-builder-lib\src\publish\PublishManager.ts:255:73)
+2026-01-02T13:07:54.3158295Z     at D:\a\openwrt-manager\openwrt-manager\open-wrt-manager-ui (2)\node_modules\app-builder-lib\src\publish\PublishManager.ts:125:29
+2026-01-02T13:07:54.3159909Z     at emitInternal (D:\a\openwrt-manager\openwrt-manager\open-wrt-manager-ui (2)\node_modules\app-builder-lib\src\util\asyncEventEmitter.ts:61:9)
+2026-01-02T13:07:54.3161647Z     at AsyncEventEmitter.emit (D:\a\openwrt-manager\openwrt-manager\open-wrt-manager-ui (2)\node_modules\app-builder-lib\src\util\asyncEventEmitter.ts:66:28)
+2026-01-02T13:07:54.3163390Z     at Packager.emitAfterPack (D:\a\openwrt-manager\openwrt-manager\open-wrt-manager-ui (2)\node_modules\app-builder-lib\src\packager.ts:332:5)
+2026-01-02T13:07:54.3165071Z     at WinPackager.doPack (D:\a\openwrt-manager\openwrt-manager\open-wrt-manager-ui (2)\node_modules\app-builder-lib\src\platformPackager.ts:351:5)
+2026-01-02T13:07:54.4859020Z ##[error]Process completed with exit code 1.

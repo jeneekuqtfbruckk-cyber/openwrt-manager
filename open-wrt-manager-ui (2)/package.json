@@ -8,9 +8,12 @@
     "lint": "eslint .",
     "start": "next start",
     "electron-dev": "npx concurrently \"npm run dev\" \"npx wait-on tcp:3000 && npm run electron\"",
+    "build:backend": "cd ../backend && pyinstaller backend.spec --clean",
     "build:ui": "next build",
-    "package": "npm run build:ui && electron-builder --win",
-    "postinstall": "electron-builder install-app-deps"
+    "prebuild": "npm run build:backend && npm run build:ui",
+    "package": "electron-builder --win",
+    "postinstall": "electron-builder install-app-deps",
+    "release": "node ../scripts/release.js"
   },
   "main": "main.js",
   "author": "OpenWrt Manager Team",
@@ -39,8 +42,35 @@
       }
     ],
     "win": {
-      "target": "nsis",
-      "icon": "public/favicon.ico"
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "../build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "allowElevation": true,
+      "installerIcon": "../build/icon.ico",
+      "uninstallerIcon": "../build/icon.ico",
+      "installerHeaderIcon": "../build/icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "OpenWrt Manager",
+      "license": "../LICENSE.txt",
+      "displayLanguageSelector": false,
+      "installerLanguages": [
+        "zh_CN",
+        "en_US"
+      ],
+      "language": "2052",
+      "perMachine": false,
+      "runAfterFinish": true
     },
     "electronLanguages": [
       "en",

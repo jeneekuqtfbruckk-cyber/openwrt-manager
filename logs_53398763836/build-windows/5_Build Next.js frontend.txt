@@ -1,0 +1,31 @@
+﻿2026-01-02T13:07:34.0606047Z ##[group]Run npm run build:ui
+2026-01-02T13:07:34.0606363Z [36;1mnpm run build:ui[0m
+2026-01-02T13:07:34.0682854Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-01-02T13:07:34.0683173Z ##[endgroup]
+2026-01-02T13:07:34.8811731Z 
+2026-01-02T13:07:34.8812386Z > my-v0-project@0.1.0 build:ui
+2026-01-02T13:07:34.8813010Z > next build
+2026-01-02T13:07:34.8813174Z 
+2026-01-02T13:07:36.9493134Z ⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache
+2026-01-02T13:07:36.9599430Z Attention: Next.js now collects completely anonymous telemetry regarding usage.
+2026-01-02T13:07:36.9600731Z This information is used to shape Next.js' roadmap and prioritize features.
+2026-01-02T13:07:36.9602173Z You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+2026-01-02T13:07:36.9603148Z https://nextjs.org/telemetry
+2026-01-02T13:07:36.9603432Z 
+2026-01-02T13:07:36.9816378Z    ▲ Next.js 16.0.10 (Turbopack)
+2026-01-02T13:07:36.9817871Z 
+2026-01-02T13:07:37.0291052Z    Creating an optimized production build ...
+2026-01-02T13:07:42.2285641Z  ✓ Compiled successfully in 4.0s
+2026-01-02T13:07:42.2721145Z    Skipping validation of types
+2026-01-02T13:07:42.4051996Z    Collecting page data using 3 workers ...
+2026-01-02T13:07:43.2292024Z    Generating static pages using 3 workers (0/3) ...
+2026-01-02T13:07:44.1385761Z  ✓ Generating static pages using 3 workers (3/3) in 909.3ms
+2026-01-02T13:07:44.1572762Z    Finalizing page optimization ...
+2026-01-02T13:07:44.3341141Z 
+2026-01-02T13:07:44.3366981Z Route (app)
+2026-01-02T13:07:44.3368898Z ┌ ○ /
+2026-01-02T13:07:44.3374386Z └ ○ /_not-found
+2026-01-02T13:07:44.3382840Z 
+2026-01-02T13:07:44.3384031Z 
+2026-01-02T13:07:44.3384689Z ○  (Static)  prerendered as static content
+2026-01-02T13:07:44.3386676Z 

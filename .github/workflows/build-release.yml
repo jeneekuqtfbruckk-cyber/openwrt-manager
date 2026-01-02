@@ -16,7 +16,18 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          
+      - name: Install Python dependencies
+        run: |
+          cd backend
+          pip install -r requirements.txt
+          pip install pyinstaller
+          
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -27,13 +38,17 @@ jobs:
       - name: Install dependencies
         run: npm install
         working-directory: "open-wrt-manager-ui (2)"
+
+      - name: Build backend
+        run: npm run build:backend
+        working-directory: "open-wrt-manager-ui (2)"
         
       - name: Build Next.js frontend
         run: npm run build:ui
         working-directory: 'open-wrt-manager-ui (2)'
         
       - name: Package Electron application
-        run: npx electron-builder --win
+        run: electron-builder --win
         working-directory: 'open-wrt-manager-ui (2)'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

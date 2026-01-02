@@ -1,0 +1,171 @@
+﻿2026-01-02T13:48:42.0521662Z ##[group]Run npx electron-builder --win
+2026-01-02T13:48:42.0522117Z [36;1mnpx electron-builder --win[0m
+2026-01-02T13:48:42.0590955Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-01-02T13:48:42.0591294Z env:
+2026-01-02T13:48:42.0592048Z   GH_TOKEN: ***
+2026-01-02T13:48:42.0592580Z ##[endgroup]
+2026-01-02T13:48:43.9369835Z   • electron-builder  version=26.0.12 os=10.0.26100
+2026-01-02T13:48:43.9375868Z   • artifacts will be published  reason=tag is defined tag=v2.0.0
+2026-01-02T13:48:43.9445339Z   • loaded configuration  file=package.json ("build" field)
+2026-01-02T13:48:44.0672896Z   • skipped dependencies rebuild  reason=npmRebuild is set to false
+2026-01-02T13:48:44.0674097Z   • packaging       platform=win32 arch=x64 electron=28.3.3 appOutDir=dist\win-unpacked
+2026-01-02T13:48:44.3431889Z   • downloading     url=https://github.com/electron/electron/releases/download/v28.3.3/electron-v28.3.3-win32-x64.zip size=108 MB parts=8
+2026-01-02T13:48:45.2296741Z   • downloaded      url=https://github.com/electron/electron/releases/download/v28.3.3/electron-v28.3.3-win32-x64.zip duration=1.143s
+2026-01-02T13:48:48.1132130Z   • file source doesn't exist  from=D:\a\openwrt-manager\openwrt-manager\backend\dist\backend.exe
+2026-01-02T13:48:48.4389088Z   • updating asar integrity executable resource  executablePath=dist\win-unpacked\OpenWrt Manager.exe
+2026-01-02T13:48:48.4513714Z   • file source doesn't exist  from=D:\a\openwrt-manager\openwrt-manager\backend\dist\backend.exe
+2026-01-02T13:48:48.4787036Z   • default Electron icon is used  reason=application icon is not set
+2026-01-02T13:48:48.8133102Z   • downloading     url=https://github.com/electron-userland/electron-builder-binaries/releases/download/winCodeSign-2.6.0/winCodeSign-2.6.0.7z size=5.6 MB parts=1
+2026-01-02T13:48:48.9149862Z   • downloaded      url=https://github.com/electron-userland/electron-builder-binaries/releases/download/winCodeSign-2.6.0/winCodeSign-2.6.0.7z duration=419ms
+2026-01-02T13:48:49.6026790Z   • signing with signtool.exe  path=dist\win-unpacked\OpenWrt Manager.exe
+2026-01-02T13:48:49.6049714Z   • building        target=nsis file=dist\OpenWrt Manager Setup 0.1.0.exe archs=x64 oneClick=true perMachine=false
+2026-01-02T13:48:49.9836667Z   • downloading     url=https://github.com/electron-userland/electron-builder-binaries/releases/download/nsis-3.0.4.1/nsis-3.0.4.1.7z size=1.3 MB parts=1
+2026-01-02T13:48:50.0657899Z   • downloaded      url=https://github.com/electron-userland/electron-builder-binaries/releases/download/nsis-3.0.4.1/nsis-3.0.4.1.7z duration=440ms
+2026-01-02T13:48:50.6564246Z   • signing with signtool.exe  path=dist\win-unpacked\resources\elevate.exe
+2026-01-02T13:49:15.8867700Z   • downloading     url=https://github.com/electron-userland/electron-builder-binaries/releases/download/nsis-resources-3.4.1/nsis-resources-3.4.1.7z size=731 kB parts=1
+2026-01-02T13:49:15.9656876Z   • downloaded      url=https://github.com/electron-userland/electron-builder-binaries/releases/download/nsis-resources-3.4.1/nsis-resources-3.4.1.7z duration=373ms
+2026-01-02T13:49:17.1308005Z   • signing with signtool.exe  path=dist\__uninstaller-nsis-my-v0-project.exe
+2026-01-02T13:49:18.2208392Z   • signing with signtool.exe  path=dist\OpenWrt Manager Setup 0.1.0.exe
+2026-01-02T13:49:18.2215490Z   • building block map  blockMapFile=dist\OpenWrt Manager Setup 0.1.0.exe.blockmap
+2026-01-02T13:49:18.8060435Z   • publishing      publisher=Github (owner: jeneekuqtfbruckk-cyber, project: openwrt-manager, version: 0.1.0)
+2026-01-02T13:49:18.8099932Z   • uploading       file=OpenWrt-Manager-Setup-0.1.0.exe.blockmap provider=github
+2026-01-02T13:49:18.8588182Z   • uploading       file=OpenWrt-Manager-Setup-0.1.0.exe provider=github
+2026-01-02T13:49:19.1590373Z   • creating GitHub release  reason=release doesn't exist tag=v0.1.0 version=0.1.0
+2026-01-02T13:49:19.3267534Z   ⨯ Cannot cleanup: 
+2026-01-02T13:49:19.3268541Z 
+2026-01-02T13:49:19.3269323Z Error #1 --------------------------------------------------------------------------------
+2026-01-02T13:49:19.3273665Z HttpError: 403 Forbidden
+2026-01-02T13:49:19.3274916Z "method: post url: https://api.github.com/repos/jeneekuqtfbruckk-cyber/openwrt-manager/releases\n\n          Data:\n          {\"message\":\"Resource not accessible by integration\",\"documentation_url\":\"https://docs.github.com/rest/releases/releases#create-a-release\",\"status\":\"403\"}\n          "
+2026-01-02T13:49:19.3275878Z Headers: {
+2026-01-02T13:49:19.3276102Z   "date": "Fri, 02 Jan 2026 13:49:19 GMT",
+2026-01-02T13:49:19.3276509Z   "content-type": "application/json; charset=utf-8",
+2026-01-02T13:49:19.3276882Z   "content-length": "153",
+2026-01-02T13:49:19.3277169Z   "x-github-media-type": "github.v3; format=json",
+2026-01-02T13:49:19.3277614Z   "x-accepted-github-permissions": "contents=write; contents=write,workflows=write",
+2026-01-02T13:49:19.3278074Z   "x-github-api-version-selected": "2022-11-28",
+2026-01-02T13:49:19.3278488Z   "x-ratelimit-limit": "5000",
+2026-01-02T13:49:19.3278910Z   "x-ratelimit-remaining": "4998",
+2026-01-02T13:49:19.3279295Z   "x-ratelimit-reset": "1767365359",
+2026-01-02T13:49:19.3279672Z   "x-ratelimit-used": "2",
+2026-01-02T13:49:19.3280019Z   "x-ratelimit-resource": "core",
+2026-01-02T13:49:19.3281841Z   "access-control-expose-headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset",
+2026-01-02T13:49:19.3283683Z   "access-control-allow-origin": "*",
+2026-01-02T13:49:19.3284324Z   "strict-transport-security": "max-age=31536000; includeSubdomains; preload",
+2026-01-02T13:49:19.3284846Z   "x-frame-options": "deny",
+2026-01-02T13:49:19.3286478Z   "x-content-type-options": "nosniff",
+2026-01-02T13:49:19.3286731Z   "x-xss-protection": "0",
+2026-01-02T13:49:19.3287117Z   "referrer-policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+2026-01-02T13:49:19.3287973Z   "content-security-policy": "default-src 'none'",
+2026-01-02T13:49:19.3288308Z   "vary": "Accept-Encoding, Accept, X-Requested-With",
+2026-01-02T13:49:19.3288732Z   "x-github-request-id": "6416:38C8C3:16E7A9C:6524990:6957CCDF",
+2026-01-02T13:49:19.3289167Z   "server": "github.com"
+2026-01-02T13:49:19.3289465Z }
+2026-01-02T13:49:19.3290325Z     at createHttpError (D:\a\openwrt-manager\openwrt-manager\open-wrt-manager-ui (2)\node_modules\builder-util-runtime\src\httpExecutor.ts:31:10)
+2026-01-02T13:49:19.3291897Z     at IncomingMessage.<anonymous> (D:\a\openwrt-manager\openwrt-manager\open-wrt-manager-ui (2)\node_modules\builder-util-runtime\src\httpExecutor.ts:202:13)
+2026-01-02T13:49:19.3293380Z     at IncomingMessage.emit (node:events:536:35)
+2026-01-02T13:49:19.3295737Z     at endReadableNT (node:internal/streams/readable:1698:12)
+2026-01-02T13:49:19.3297332Z     at processTicksAndRejections (node:internal/process/task_queues:82:21)
+2026-01-02T13:49:19.3298812Z 
+2026-01-02T13:49:19.3299366Z Error #2 --------------------------------------------------------------------------------
+2026-01-02T13:49:19.3299976Z HttpError: 403 Forbidden
+2026-01-02T13:49:19.3301854Z "method: post url: https://api.github.com/repos/jeneekuqtfbruckk-cyber/openwrt-manager/releases\n\n          Data:\n          {\"message\":\"Resource not accessible by integration\",\"documentation_url\":\"https://docs.github.com/rest/releases/releases#create-a-release\",\"status\":\"403\"}\n          "
+2026-01-02T13:49:19.3303566Z Headers: {
+2026-01-02T13:49:19.3303922Z   "date": "Fri, 02 Jan 2026 13:49:19 GMT",
+2026-01-02T13:49:19.3304463Z   "content-type": "application/json; charset=utf-8",
+2026-01-02T13:49:19.3304937Z   "content-length": "153",
+2026-01-02T13:49:19.3305396Z   "x-github-media-type": "github.v3; format=json",
+2026-01-02T13:49:19.3306154Z   "x-accepted-github-permissions": "contents=write; contents=write,workflows=write",
+2026-01-02T13:49:19.3306854Z   "x-github-api-version-selected": "2022-11-28",
+2026-01-02T13:49:19.3308805Z   "x-ratelimit-limit": "5000",
+2026-01-02T13:49:19.3309214Z   "x-ratelimit-remaining": "4998",
+2026-01-02T13:49:19.3309550Z   "x-ratelimit-reset": "1767365359",
+2026-01-02T13:49:19.3309886Z   "x-ratelimit-used": "2",
+2026-01-02T13:49:19.3310236Z   "x-ratelimit-resource": "core",
+2026-01-02T13:49:19.3312362Z   "access-control-expose-headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset",
+2026-01-02T13:49:19.3313782Z   "access-control-allow-origin": "*",
+2026-01-02T13:49:19.3314225Z   "strict-transport-security": "max-age=31536000; includeSubdomains; preload",
+2026-01-02T13:49:19.3314606Z   "x-frame-options": "deny",
+2026-01-02T13:49:19.3314868Z   "x-content-type-options": "nosniff",
+2026-01-02T13:49:19.3315135Z   "x-xss-protection": "0",
+2026-01-02T13:49:19.3315499Z   "referrer-policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+2026-01-02T13:49:19.3315925Z   "content-security-policy": "default-src 'none'",
+2026-01-02T13:49:19.3316263Z   "vary": "Accept-Encoding, Accept, X-Requested-With",
+2026-01-02T13:49:19.3316614Z   "x-github-request-id": "6416:38C8C3:16E7A9C:6524990:6957CCDF",
+2026-01-02T13:49:19.3316915Z   "server": "github.com"
+2026-01-02T13:49:19.3317106Z }
+2026-01-02T13:49:19.3317631Z     at createHttpError (D:\a\openwrt-manager\openwrt-manager\open-wrt-manager-ui (2)\node_modules\builder-util-runtime\src\httpExecutor.ts:31:10)
+2026-01-02T13:49:19.3318552Z     at IncomingMessage.<anonymous> (D:\a\openwrt-manager\openwrt-manager\open-wrt-manager-ui (2)\node_modules\builder-util-runtime\src\httpExecutor.ts:202:13)
+2026-01-02T13:49:19.3319467Z     at IncomingMessage.emit (node:events:536:35)
+2026-01-02T13:49:19.3319808Z     at endReadableNT (node:internal/streams/readable:1698:12)
+2026-01-02T13:49:19.3320422Z     at processTicksAndRejections (node:internal/process/task_queues:82:21)  failedTask=build stackTrace=Error: Cannot cleanup: 
+2026-01-02T13:49:19.3323647Z                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           Error #1 --------------------------------------------------------------------------------
+2026-01-02T13:49:19.3326430Z HttpError: 403 Forbidden
+2026-01-02T13:49:19.3328417Z "method: post url: https://api.github.com/repos/jeneekuqtfbruckk-cyber/openwrt-manager/releases\n\n          Data:\n          {\"message\":\"Resource not accessible by integration\",\"documentation_url\":\"https://docs.github.com/rest/releases/releases#create-a-release\",\"status\":\"403\"}\n          "
+2026-01-02T13:49:19.3329406Z Headers: {
+2026-01-02T13:49:19.3329620Z   "date": "Fri, 02 Jan 2026 13:49:19 GMT",
+2026-01-02T13:49:19.3329923Z   "content-type": "application/json; charset=utf-8",
+2026-01-02T13:49:19.3330211Z   "content-length": "153",
+2026-01-02T13:49:19.3330492Z   "x-github-media-type": "github.v3; format=json",
+2026-01-02T13:49:19.3330924Z   "x-accepted-github-permissions": "contents=write; contents=write,workflows=write",
+2026-01-02T13:49:19.3331363Z   "x-github-api-version-selected": "2022-11-28",
+2026-01-02T13:49:19.3331659Z   "x-ratelimit-limit": "5000",
+2026-01-02T13:49:19.3331901Z   "x-ratelimit-remaining": "4998",
+2026-01-02T13:49:19.3332157Z   "x-ratelimit-reset": "1767365359",
+2026-01-02T13:49:19.3332400Z   "x-ratelimit-used": "2",
+2026-01-02T13:49:19.3332626Z   "x-ratelimit-resource": "core",
+2026-01-02T13:49:19.3333811Z   "access-control-expose-headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset",
+2026-01-02T13:49:19.3335100Z   "access-control-allow-origin": "*",
+2026-01-02T13:49:19.3335480Z   "strict-transport-security": "max-age=31536000; includeSubdomains; preload",
+2026-01-02T13:49:19.3335856Z   "x-frame-options": "deny",
+2026-01-02T13:49:19.3336121Z   "x-content-type-options": "nosniff",
+2026-01-02T13:49:19.3336364Z   "x-xss-protection": "0",
+2026-01-02T13:49:19.3336745Z   "referrer-policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+2026-01-02T13:49:19.3337184Z   "content-security-policy": "default-src 'none'",
+2026-01-02T13:49:19.3337515Z   "vary": "Accept-Encoding, Accept, X-Requested-With",
+2026-01-02T13:49:19.3337889Z   "x-github-request-id": "6416:38C8C3:16E7A9C:6524990:6957CCDF",
+2026-01-02T13:49:19.3338211Z   "server": "github.com"
+2026-01-02T13:49:19.3338418Z }
+2026-01-02T13:49:19.3338928Z     at createHttpError (D:\a\openwrt-manager\openwrt-manager\open-wrt-manager-ui (2)\node_modules\builder-util-runtime\src\httpExecutor.ts:31:10)
+2026-01-02T13:49:19.3339829Z     at IncomingMessage.<anonymous> (D:\a\openwrt-manager\openwrt-manager\open-wrt-manager-ui (2)\node_modules\builder-util-runtime\src\httpExecutor.ts:202:13)
+2026-01-02T13:49:19.3340446Z     at IncomingMessage.emit (node:events:536:35)
+2026-01-02T13:49:19.3340772Z     at endReadableNT (node:internal/streams/readable:1698:12)
+2026-01-02T13:49:19.3341196Z     at processTicksAndRejections (node:internal/process/task_queues:82:21)
+2026-01-02T13:49:19.3344403Z                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           Error #2 --------------------------------------------------------------------------------
+2026-01-02T13:49:19.3347408Z HttpError: 403 Forbidden
+2026-01-02T13:49:19.3348544Z "method: post url: https://api.github.com/repos/jeneekuqtfbruckk-cyber/openwrt-manager/releases\n\n          Data:\n          {\"message\":\"Resource not accessible by integration\",\"documentation_url\":\"https://docs.github.com/rest/releases/releases#create-a-release\",\"status\":\"403\"}\n          "
+2026-01-02T13:49:19.3349469Z Headers: {
+2026-01-02T13:49:19.3349660Z   "date": "Fri, 02 Jan 2026 13:49:19 GMT",
+2026-01-02T13:49:19.3349974Z   "content-type": "application/json; charset=utf-8",
+2026-01-02T13:49:19.3350275Z   "content-length": "153",
+2026-01-02T13:49:19.3350528Z   "x-github-media-type": "github.v3; format=json",
+2026-01-02T13:49:19.3350957Z   "x-accepted-github-permissions": "contents=write; contents=write,workflows=write",
+2026-01-02T13:49:19.3351381Z   "x-github-api-version-selected": "2022-11-28",
+2026-01-02T13:49:19.3351660Z   "x-ratelimit-limit": "5000",
+2026-01-02T13:49:19.3351909Z   "x-ratelimit-remaining": "4998",
+2026-01-02T13:49:19.3352155Z   "x-ratelimit-reset": "1767365359",
+2026-01-02T13:49:19.3352397Z   "x-ratelimit-used": "2",
+2026-01-02T13:49:19.3352635Z   "x-ratelimit-resource": "core",
+2026-01-02T13:49:19.3353793Z   "access-control-expose-headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset",
+2026-01-02T13:49:19.3354874Z   "access-control-allow-origin": "*",
+2026-01-02T13:49:19.3355265Z   "strict-transport-security": "max-age=31536000; includeSubdomains; preload",
+2026-01-02T13:49:19.3355618Z   "x-frame-options": "deny",
+2026-01-02T13:49:19.3355865Z   "x-content-type-options": "nosniff",
+2026-01-02T13:49:19.3356115Z   "x-xss-protection": "0",
+2026-01-02T13:49:19.3356475Z   "referrer-policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+2026-01-02T13:49:19.3357012Z   "content-security-policy": "default-src 'none'",
+2026-01-02T13:49:19.3357353Z   "vary": "Accept-Encoding, Accept, X-Requested-With",
+2026-01-02T13:49:19.3357714Z   "x-github-request-id": "6416:38C8C3:16E7A9C:6524990:6957CCDF",
+2026-01-02T13:49:19.3358013Z   "server": "github.com"
+2026-01-02T13:49:19.3358219Z }
+2026-01-02T13:49:19.3358727Z     at createHttpError (D:\a\openwrt-manager\openwrt-manager\open-wrt-manager-ui (2)\node_modules\builder-util-runtime\src\httpExecutor.ts:31:10)
+2026-01-02T13:49:19.3359632Z     at IncomingMessage.<anonymous> (D:\a\openwrt-manager\openwrt-manager\open-wrt-manager-ui (2)\node_modules\builder-util-runtime\src\httpExecutor.ts:202:13)
+2026-01-02T13:49:19.3360240Z     at IncomingMessage.emit (node:events:536:35)
+2026-01-02T13:49:19.3360572Z     at endReadableNT (node:internal/streams/readable:1698:12)
+2026-01-02T13:49:19.3360995Z     at processTicksAndRejections (node:internal/process/task_queues:82:21)
+2026-01-02T13:49:19.3361646Z     at throwError (D:\a\openwrt-manager\openwrt-manager\open-wrt-manager-ui (2)\node_modules\builder-util\src\asyncTaskManager.ts:88:11)
+2026-01-02T13:49:19.3362430Z     at checkErrors (D:\a\openwrt-manager\openwrt-manager\open-wrt-manager-ui (2)\node_modules\builder-util\src\asyncTaskManager.ts:53:9)
+2026-01-02T13:49:19.3363287Z     at AsyncTaskManager.awaitTasks (D:\a\openwrt-manager\openwrt-manager\open-wrt-manager-ui (2)\node_modules\builder-util\src\asyncTaskManager.ts:67:7)
+2026-01-02T13:49:19.3364184Z     at processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-01-02T13:49:19.3364922Z     at PublishManager.awaitTasks (D:\a\openwrt-manager\openwrt-manager\open-wrt-manager-ui (2)\node_modules\app-builder-lib\src\publish\PublishManager.ts:242:5)
+2026-01-02T13:49:19.3366142Z     at executeFinally (D:\a\openwrt-manager\openwrt-manager\open-wrt-manager-ui (2)\node_modules\builder-util\src\promise.ts:23:3)
+2026-01-02T13:49:19.4592758Z ##[error]Process completed with exit code 1.

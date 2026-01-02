@@ -1,0 +1,18 @@
+﻿2026-01-02T13:47:41.2954524Z ##[group]Run actions/setup-node@v4
+2026-01-02T13:47:41.2954888Z with:
+2026-01-02T13:47:41.2955062Z   node-version: 20
+2026-01-02T13:47:41.2955238Z   cache: npm
+2026-01-02T13:47:41.2955506Z   cache-dependency-path: open-wrt-manager-ui (2)/package-lock.json
+2026-01-02T13:47:41.2955828Z   always-auth: false
+2026-01-02T13:47:41.2956010Z   check-latest: false
+2026-01-02T13:47:41.2956393Z   token: ***
+2026-01-02T13:47:41.2956561Z ##[endgroup]
+2026-01-02T13:47:41.5468989Z Found in cache @ C:\hostedtoolcache\windows\node\20.19.6\x64
+2026-01-02T13:47:41.5480047Z ##[group]Environment details
+2026-01-02T13:47:46.4106470Z node: v20.19.6
+2026-01-02T13:47:46.4106814Z npm: 10.8.2
+2026-01-02T13:47:46.4107004Z yarn: 1.22.22
+2026-01-02T13:47:46.4109678Z ##[endgroup]
+2026-01-02T13:47:46.4761822Z [command]C:\Windows\system32\cmd.exe /D /S /C "C:\hostedtoolcache\windows\node\20.19.6\x64\npm.cmd config get cache"
+2026-01-02T13:47:46.9884210Z C:\npm\cache
+2026-01-02T13:47:47.4149797Z npm cache is not found

@@ -5,7 +5,7 @@ build/
 __pycache__/
 *.pyc
 *.exe
-*.spec
+# *.spec  # Allow backend.spec for PyInstaller
 .env
 .DS_Store
 *.log
