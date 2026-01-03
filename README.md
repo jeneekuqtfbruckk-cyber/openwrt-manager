@@ -14,18 +14,11 @@
 
 ---
 
-## 📸 应用截图
+## 📸 应用界面
 
 <div align="center">
 
-### 桌面图标
-![Desktop Icon](screenshots/desktop-icon.png)
-
-### 应用界面
 ![Application Interface](screenshots/app-interface.png)
-
-### 扫描结果
-![Scan Results](screenshots/scan-results.png)
 
 </div>
 
