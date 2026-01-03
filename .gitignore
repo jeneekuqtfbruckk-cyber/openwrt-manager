@@ -13,3 +13,9 @@ __pycache__/
 *.log
 vscode/
 .idea/
+
+# Internal documentation (not for Git)
+.internal/
+
+# Backup files
+*_backup_*.zip
