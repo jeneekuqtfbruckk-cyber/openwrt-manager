@@ -22,7 +22,6 @@ jobs:
         with:
           python-version: '3.11'
           
-      - name: Install Python dependencies
         run: |
           cd backend
           pip install -r requirements.txt
@@ -39,6 +38,9 @@ jobs:
         run: npm install
         working-directory: "open-wrt-manager-ui (2)"
 
+
+
+
       - name: Build backend
         run: npm run build:backend
         working-directory: "open-wrt-manager-ui (2)"
@@ -46,6 +48,9 @@ jobs:
       - name: Build Next.js frontend
         run: npm run build:ui
         working-directory: 'open-wrt-manager-ui (2)'
+
+
+
 
       - name: Copy icon files
         run: Copy-Item "../build/icon.ico" "public/icon.ico" -Force
@@ -76,7 +81,7 @@ jobs:
                 "Authorization" = "Bearer ${{ secrets.SIGNPATH_API_TOKEN }}"
               } `
               -Form @{
-                "ProjectSlug" = "openwrt-manager"
+                "ProjectSlug" = "OpenWrt_Manager"
                 "SigningPolicySlug" = "release-builds"
                 "ArtifactConfigurationSlug" = "release-installer"
                 "Artifact" = Get-Item $installer.FullName
@@ -110,44 +115,3 @@ jobs:
                     "Authorization" = "Bearer ${{ secrets.SIGNPATH_API_TOKEN }}"
                   } `
                   -OutFile $installer.FullName
-                
-                Write-Host "✅ Signed installer downloaded and replaced original"
-                break
-              }
-              elseif ($status.Status -eq "Failed" -or $status.Status -eq "Denied") {
-                Write-Error "❌ SignPath signing failed: $($status.Status)"
-                exit 1
-              }
-            }
-            
-            if ($elapsed -ge $timeout) {
-              Write-Warning "⚠️ Signing timeout reached, continuing with unsigned build"
-            }
-          } else {
-            Write-Warning "⚠️ No installer found, skipping SignPath signing"
-          }
-        working-directory: 'open-wrt-manager-ui (2)'
-          
-      - name: Upload portable version
-        uses: actions/upload-artifact@v4
-        with:
-          name: OpenWrtManager-Portable
-          path: "open-wrt-manager-ui (2)/dist/win-unpacked/**"
-          
-      - name: Upload installer
-        uses: actions/upload-artifact@v4
-        with:
-          name: OpenWrtManager-Setup
-          path: "open-wrt-manager-ui (2)/dist/*.exe"
-          
-      - name: Create GitHub Release
-        if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v2
-        with:
-          files: |
-            open-wrt-manager-ui (2)/dist/*.exe
-          draft: false
-          prerelease: false
-          generate_release_notes: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
