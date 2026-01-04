@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write  # Required to create releases and upload assets
+  contents: write
 
 jobs:
   build-windows:
@@ -21,97 +21,81 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          
+
+      - name: Install Python dependencies
         run: |
           cd backend
           pip install -r requirements.txt
           pip install pyinstaller
-          
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
           cache-dependency-path: 'open-wrt-manager-ui (2)/package-lock.json'
-          
+
       - name: Install dependencies
         run: npm install
         working-directory: "open-wrt-manager-ui (2)"
 
-
-
-
       - name: Build backend
         run: npm run build:backend
         working-directory: "open-wrt-manager-ui (2)"
-        
+
       - name: Build Next.js frontend
         run: npm run build:ui
-        working-directory: 'open-wrt-manager-ui (2)'
-
-
-
+        working-directory: "open-wrt-manager-ui (2)"
 
       - name: Copy icon files
         run: Copy-Item "../build/icon.ico" "public/icon.ico" -Force
-        working-directory: 'open-wrt-manager-ui (2)'
-        
+        working-directory: "open-wrt-manager-ui (2)"
+
       - name: Package Electron application
         run: npx electron-builder --win
-        working-directory: 'open-wrt-manager-ui (2)'
+        working-directory: "open-wrt-manager-ui (2)"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
+
       - name: Sign with SignPath
         if: startsWith(github.ref, 'refs/tags/')
         shell: pwsh
         run: |
-          # Find the installer EXE
-          $installer = Get-ChildItem -Path "dist" -Filter "*.exe" | Select-Object -First 1
-          
+          $installer = Get-ChildItem -Path "open-wrt-manager-ui (2)/dist" -Filter "*.exe" | Select-Object -First 1
           if ($installer) {
-            Write-Host "📝 Found installer: $($installer.FullName)"
-            Write-Host "📦 File size: $([math]::Round($installer.Length/1MB, 2)) MB"
-            
-            # Submit to SignPath for signing
-            Write-Host "🚀 Submitting to SignPath for code signing..."
-            
+            Write-Host "Found installer: $($installer.FullName)"
             $response = Invoke-RestMethod -Method Post -Uri "https://app.signpath.io/API/v1/2f96238a-f144-41e0-bf3a-5010c66ebf97/SigningRequests" `
-              -Headers @{
-                "Authorization" = "Bearer ${{ secrets.SIGNPATH_API_TOKEN }}"
-              } `
+              -Headers @{ "Authorization" = "Bearer ${{ secrets.SIGNPATH_API_TOKEN }}" } `
               -Form @{
                 "ProjectSlug" = "OpenWrt_Manager"
                 "SigningPolicySlug" = "release-builds"
                 "ArtifactConfigurationSlug" = "release-installer"
                 "Artifact" = Get-Item $installer.FullName
               }
+            Write-Host "SignPath signing request submitted! ID: $($response.SigningRequestId)"
             
-            Write-Host "✅ SignPath signing request submitted successfully!"
-            Write-Host "Request ID: $($response.SigningRequestId)"
-            
-            # Wait for signing to complete (with timeout)
-            $timeout = 300  # 5 minutes
+            $timeout = 300
             $elapsed = 0
-            $interval = 10  # Check every 10 seconds
-            
             while ($elapsed -lt $timeout) {
-              Start-Sleep -Seconds $interval
-              $elapsed += $interval
-              
+              Start-Sleep -Seconds 10
+              $elapsed += 10
               $status = Invoke-RestMethod -Method Get -Uri "https://app.signpath.io/API/v1/2f96238a-f144-41e0-bf3a-5010c66ebf97/SigningRequests/$($response.SigningRequestId)" `
-                -Headers @{
-                  "Authorization" = "Bearer ${{ secrets.SIGNPATH_API_TOKEN }}"
-                }
-              
-              Write-Host "⏳ Signing status: $($status.Status) (elapsed: $elapsed s)"
-              
+                -Headers @{ "Authorization" = "Bearer ${{ secrets.SIGNPATH_API_TOKEN }}" }
+              Write-Host "Signing status: $($status.Status) ($elapsed s)"
               if ($status.Status -eq "Completed") {
-                Write-Host "🎉 Code signing completed!"
-                
-                # Download signed artifact
                 Invoke-WebRequest -Uri "https://app.signpath.io/API/v1/2f96238a-f144-41e0-bf3a-5010c66ebf97/SigningRequests/$($response.SigningRequestId)/SignedArtifact" `
-                  -Headers @{
-                    "Authorization" = "Bearer ${{ secrets.SIGNPATH_API_TOKEN }}"
-                  } `
+                  -Headers @{ "Authorization" = "Bearer ${{ secrets.SIGNPATH_API_TOKEN }}" } `
                   -OutFile $installer.FullName
+                Write-Host "Signed artifact downloaded and replaced."
+                break
+              }
+            }
+          }
+
+      - name: Upload portable version
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: open-wrt-manager-ui (2)/dist/*.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
