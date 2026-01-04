@@ -57,6 +57,77 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
+      - name: Sign with SignPath
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: pwsh
+        run: |
+          # Find the installer EXE
+          $installer = Get-ChildItem -Path "dist" -Filter "*.exe" | Select-Object -First 1
+          
+          if ($installer) {
+            Write-Host "📝 Found installer: $($installer.FullName)"
+            Write-Host "📦 File size: $([math]::Round($installer.Length/1MB, 2)) MB"
+            
+            # Submit to SignPath for signing
+            Write-Host "🚀 Submitting to SignPath for code signing..."
+            
+            $response = Invoke-RestMethod -Method Post -Uri "https://app.signpath.io/API/v1/2f96238a-f144-41e0-bf3a-5010c66ebf97/SigningRequests" `
+              -Headers @{
+                "Authorization" = "Bearer ${{ secrets.SIGNPATH_API_TOKEN }}"
+              } `
+              -Form @{
+                "ProjectSlug" = "openwrt-manager"
+                "SigningPolicySlug" = "release-builds"
+                "ArtifactConfigurationSlug" = "release-installer"
+                "Artifact" = Get-Item $installer.FullName
+              }
+            
+            Write-Host "✅ SignPath signing request submitted successfully!"
+            Write-Host "Request ID: $($response.SigningRequestId)"
+            
+            # Wait for signing to complete (with timeout)
+            $timeout = 300  # 5 minutes
+            $elapsed = 0
+            $interval = 10  # Check every 10 seconds
+            
+            while ($elapsed -lt $timeout) {
+              Start-Sleep -Seconds $interval
+              $elapsed += $interval
+              
+              $status = Invoke-RestMethod -Method Get -Uri "https://app.signpath.io/API/v1/2f96238a-f144-41e0-bf3a-5010c66ebf97/SigningRequests/$($response.SigningRequestId)" `
+                -Headers @{
+                  "Authorization" = "Bearer ${{ secrets.SIGNPATH_API_TOKEN }}"
+                }
+              
+              Write-Host "⏳ Signing status: $($status.Status) (elapsed: $elapsed s)"
+              
+              if ($status.Status -eq "Completed") {
+                Write-Host "🎉 Code signing completed!"
+                
+                # Download signed artifact
+                Invoke-WebRequest -Uri "https://app.signpath.io/API/v1/2f96238a-f144-41e0-bf3a-5010c66ebf97/SigningRequests/$($response.SigningRequestId)/SignedArtifact" `
+                  -Headers @{
+                    "Authorization" = "Bearer ${{ secrets.SIGNPATH_API_TOKEN }}"
+                  } `
+                  -OutFile $installer.FullName
+                
+                Write-Host "✅ Signed installer downloaded and replaced original"
+                break
+              }
+              elseif ($status.Status -eq "Failed" -or $status.Status -eq "Denied") {
+                Write-Error "❌ SignPath signing failed: $($status.Status)"
+                exit 1
+              }
+            }
+            
+            if ($elapsed -ge $timeout) {
+              Write-Warning "⚠️ Signing timeout reached, continuing with unsigned build"
+            }
+          } else {
+            Write-Warning "⚠️ No installer found, skipping SignPath signing"
+          }
+        working-directory: 'open-wrt-manager-ui (2)'
+          
       - name: Upload portable version
         uses: actions/upload-artifact@v4
         with:
