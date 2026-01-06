@@ -53,6 +53,7 @@ jobs:
         working-directory: "open-wrt-manager-ui (2)"
 
       - name: Package Electron application
+        if: ${{ !endsWith(github.ref, '-extension') }}
         run: npx electron-builder --win
         working-directory: "open-wrt-manager-ui (2)"
         env:
@@ -60,7 +61,7 @@ jobs:
 
       # SignPath Code Signing (REST API - Free Version)
       - name: Sign with SignPath
-        if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/') && !endsWith(github.ref, '-extension')
         shell: pwsh
         run: |
           $installer = Get-ChildItem -Path "dist" -Filter "*.exe" | Select-Object -First 1
@@ -144,16 +145,28 @@ jobs:
           cd browser-extension
           npm ci
           npx wxt build
-          Compress-Archive -Path ".output/chrome-mv3/*" -DestinationPath "../openwrt-manager-extension-v2.1.0.zip" -Force
+          $zipName = "openwrt-manager-extension-${{ github.ref_name }}.zip"
+          Compress-Archive -Path ".output/chrome-mv3/*" -DestinationPath "../$zipName" -Force
         working-directory: "."
 
       - name: Upload portable version
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/') && !endsWith(github.ref, '-extension')
         with:
           files: |
             open-wrt-manager-ui (2)/dist-signed/*.exe
             openwrt-manager-extension-v2.1.0.zip
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Extension Only
+        uses: softprops/action-gh-release@v1
+        if: endsWith(github.ref, '-extension')
+        with:
+          files: openwrt-manager-extension-*.zip
           draft: false
           prerelease: false
           generate_release_notes: true
