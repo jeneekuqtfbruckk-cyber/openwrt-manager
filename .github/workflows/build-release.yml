@@ -143,7 +143,7 @@ jobs:
       - name: Build and Package Extension
         run: |
           cd browser-extension
-          # Extract version from tag (v2.1.2-extension -> 2.1.2)
+          # Extract version from tag (v2.1.3-extension -> 2.1.3)
           $tagName = "${{ github.ref_name }}"
           $version = $tagName -replace '^v' -replace '-extension$', ''
           Write-Host "Building extension version: $version"
@@ -153,9 +153,10 @@ jobs:
           $packageJson.version = $version
           $packageJson | ConvertTo-Json -Depth 100 | Set-Content package.json
           
-          # Build and zip using WXT
+          # Install dependencies and build
           npm ci
-          npx wxt build --zip
+          npx wxt build
+          npx wxt zip
           
           # Move and rename the generated zip
           cd ..
