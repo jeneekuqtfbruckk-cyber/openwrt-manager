@@ -145,7 +145,8 @@ jobs:
           cd browser-extension
           npm ci
           npx wxt build
-          $zipName = "openwrt-manager-extension-${{ github.ref_name }}.zip"
+          $tag = "${{ github.ref_name }}"
+          $zipName = "openwrt-manager-extension-$tag.zip"
           Compress-Archive -Path ".output/chrome-mv3/*" -DestinationPath "../$zipName" -Force
         working-directory: "."
 
@@ -155,7 +156,7 @@ jobs:
         with:
           files: |
             open-wrt-manager-ui (2)/dist-signed/*.exe
-            openwrt-manager-extension-v2.1.0.zip
+            openwrt-manager-extension-*.zip
           draft: false
           prerelease: false
           generate_release_notes: true
