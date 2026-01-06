@@ -168,7 +168,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: endsWith(github.ref, '-extension')
         with:
-          files: openwrt-manager-extension-*.zip
+          files: openwrt-manager-extension-v*.zip
           draft: false
           prerelease: false
           generate_release_notes: true
