@@ -146,6 +146,10 @@ jobs:
           npm ci
           npx wxt build
           cd ..
+          # Remove WXT auto-generated zip to prevent duplicate uploads
+          Remove-Item -Path "browser-extension/.output/chrome-mv3-*.zip" -ErrorAction SilentlyContinue
+          Remove-Item -Path "browser-extension/.output/*.zip" -ErrorAction SilentlyContinue
+          # Create our custom-named zip
           $tagName = "${{ github.ref_name }}"
           $version = $tagName -replace '-extension$', ''
           Compress-Archive -Path "browser-extension/.output/chrome-mv3/*" -DestinationPath "openwrt-manager-extension-$version.zip" -Force
@@ -168,7 +172,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: endsWith(github.ref, '-extension')
         with:
-          files: openwrt-manager-extension-v*.zip
+          files: openwrt-manager-extension-*.zip
           draft: false
           prerelease: false
           generate_release_notes: true
