@@ -149,7 +149,8 @@ jobs:
           Write-Host "Building extension version: $version"
           
           # Update package.json version dynamically
-          $packageJson = Get-Content package.json | ConvertFrom-Json          $packageJson.version = $version
+          $packageJson = Get-Content package.json | ConvertFrom-Json
+          $packageJson.version = $version
           $packageJson | ConvertTo-Json -Depth 100 | Set-Content package.json
           
           # Build and zip using WXT
