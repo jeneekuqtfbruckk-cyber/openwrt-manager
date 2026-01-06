@@ -8,7 +8,8 @@
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.txt)
 [![Platform](https://img.shields.io/badge/platform-Windows-blue.svg)](#)
-[![Version](https://img.shields.io/badge/version-2.0.1-green.svg)](https://github.com/jeneekuqtfbruckk-cyber/openwrt-manager/releases)
+[![Version](https://img.shields.io/badge/version-2.0.6-green.svg)](https://github.com/jeneekuqtfbruckk-cyber/openwrt-manager/releases)
+[![Code Signing](https://img.shields.io/badge/code%20signing-SignPath-blue.svg)](https://signpath.io)
 
 </div>
 
@@ -48,18 +49,27 @@
 ### 安装步骤
 
 1. 从 [Releases](https://github.com/jeneekuqtfbruckk-cyber/openwrt-manager/releases) 下载最新版本
-2. 运行 `OpenWrt-Manager-Setup-0.1.0.exe`
-3. 如遇 Windows 安全提示，点击"更多信息" → "仍要运行"
+2. 推荐下载 `v2.0.6-fixed` 或更高版本（已签名）
+3. 运行 `OpenWrtManager-Setup-2.0.6.exe`
 4. 按照安装向导完成安装
 5. 启动应用开始使用
 
+💡 **提示**：v2.0.6+ 版本已通过代码签名，安装过程更流畅
+
 ### ⚠️ 安全提示
 
-本软件为开源项目，安全无毒。Windows/360 安全警告是因为未购买代码签名证书导致的正常现象。
+本软件为开源项目，安全无毒。
 
-**如何信任本软件**：
+**代码签名状态**：
+- ✅ **v2.0.6及以后版本**：已通过 [SignPath](https://signpath.io) 代码签名
+- ⏳ 等待SignPath Foundation审核通过后，将获得完全可信的代码签名证书
+- ⚠️ **旧版本(v2.0.1及之前)**：未签名，可能触发安全警告
+
+**如何处理安全警告**（仅旧版本）：
 - **Windows SmartScreen**：点击"更多信息" → "仍要运行"
 - **360 安全卫士**：点击"更多" → "仍要运行" → 勾选"不再提醒"
+
+**推荐**：下载最新的 v2.0.6+ 版本，已包含代码签名
 
 ---
 

@@ -10,7 +10,7 @@
 |---------|------|
 | **项目名称** | OpenWrt Manager |
 | **项目类型** | 桌面应用（Electron + Python） |
-| **当前版本** | v2.0.1 |
+| **当前版本** | v2.0.6-fixed (已签名) |
 | **开源协议** | MIT License |
 | **GitHub仓库** | [jeneekuqtfbruckk-cyber/openwrt-manager](https://github.com/jeneekuqtfbruckk-cyber/openwrt-manager) |
 | **主要语言** | TypeScript, Python, JavaScript |
@@ -340,8 +340,14 @@ OpenWrt-Manager-Setup-2.0.1.exe
 
 ### 当前状态
 
-**配置完成度**: ✅ 100%  
-**审核状态**: ⏳ 等待人工审核（1-2周）
+**集成完成度**: ✅ **100% 完成**  
+**签名状态**: ✅ **v2.0.6-fixed 签名成功**  
+**证书状态**: ⏳ 使用Test Certificate（等待Foundation审核）
+
+### 实施方案
+
+**核心方法**: REST API直接调用（非官方GitHub Action）  
+**原因**: 官方Action需要Trusted Build System connector（仅付费版）
 
 **已完成配置**:
 - ✅ Organization: `openwrt-manager`
@@ -457,6 +463,6 @@ OpenWrt-Manager-Setup-2.0.1.exe
 
 ---
 
-**文档版本**: v1.0  
-**最后更新**: 2026-01-04  
+**文档版本**: v1.1  
+**最后更新**: 2026-01-05  
 **维护者**: OpenWrt Manager Team
