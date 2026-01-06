@@ -146,8 +146,9 @@ jobs:
           npm ci
           npx wxt build
           cd ..
-          $tag = "${{ github.ref_name }}" -replace '-extension$', ''
-          Compress-Archive -Path "browser-extension/.output/chrome-mv3/*" -DestinationPath "openwrt-manager-extension-$tag.zip" -Force
+          $tagName = "${{ github.ref_name }}"
+          $version = $tagName -replace '-extension$', ''
+          Compress-Archive -Path "browser-extension/.output/chrome-mv3/*" -DestinationPath "openwrt-manager-extension-$version.zip" -Force
         working-directory: "."
 
       - name: Upload portable version
